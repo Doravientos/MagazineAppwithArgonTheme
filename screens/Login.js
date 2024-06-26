@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -15,14 +15,16 @@ import { login } from "../store/slices/authSlice";
 
 const { width, height } = Dimensions.get("screen");
 
-const Login = () => {
+const Login = (props) => {
+  const { navigation } = props;
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("12345678");
+  
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const [email, setEmail] = useState("abc@gmail.com");
-  const [password, setPassword] = useState("12345678");
 
   const handleLogin = () => {
-    dispatch(login({email, password}));
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -126,7 +128,18 @@ const Login = () => {
                       onPress={handleLogin}
                     >
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                        Login
+                        LOGIN
+                      </Text>
+                    </Button>
+                  </Block>
+                  <Block middle>
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
+                      onPress={() => navigation.navigate("Register")}
+                    >
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        REGISTER
                       </Text>
                     </Button>
                   </Block>
@@ -143,7 +156,7 @@ const Login = () => {
 const styles = StyleSheet.create({
   registerContainer: {
     width: width * 0.9,
-    height: height * 0.5,
+    height: height * 0.8,
     backgroundColor: "#F4F5F7",
     borderRadius: 4,
     shadowColor: argonTheme.COLORS.BLACK,
@@ -188,7 +201,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   createButton: {
-    width: width * 0.5,
+    width: width * 0.3,
     marginTop: 25,
   },
 });

@@ -1,20 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AsyncStorage } from "react-native";
-import axiosInstance from "../../config/axiosInstance";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axiosInstance from "../../constants/config";
 
 export const login = createAsyncThunk("auth/login", async (data) => {
   try {
-    const response = await axiosInstance.post("/signin", data);
-    await AsyncStorage.setItem("token", response.token);
-    return response.data;
-  } catch (error) {}
+    const response = await axiosInstance({
+      url: "/signin",
+      method: "POST",
+      data,
+    });
+    await AsyncStorage.setItem("username", response.data.user.name);
+    return response.data.user;
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 export const signup = createAsyncThunk("auth/signup", async (data) => {
   try {
-    
-    const response = await axios.post("/signup", data);
+    const response = await axiosInstance({
+      url: "/signup",
+      method: "POST",
+      data,
+    });
     return response.data;
   } catch (error) {}
 });
@@ -25,6 +33,8 @@ const authSlice = createSlice({
     user: null,
     status: "idle",
     error: null,
+    token: null,
+    isLogged: false
   },
   reducers: {
     resetError: (state) => {
@@ -35,14 +45,17 @@ const authSlice = createSlice({
     builder
       .addCase(login.pending, (state) => {
         state.status = "loading";
+        state.isLogged = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload;
+        state.isLogged = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+        state.isLogged = false;
       })
       .addCase(signup.pending, (state) => {
         state.status = "loading";
@@ -53,18 +66,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(signup.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(logout.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.status = "idle";
-        state.user = null;
-        state.error = null;
-      })
-      .addCase(logout.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
