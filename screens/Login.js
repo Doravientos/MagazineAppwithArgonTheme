@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -10,118 +10,135 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/slices/authSlice";
 
 const { width, height } = Dimensions.get("screen");
 
-class Login extends React.Component {
-  render() {
-    return (
-      <Block flex middle>
-        <StatusBar hidden />
-        <ImageBackground
-          source={Images.RegisterBackground}
-          style={{ width, height, zIndex: 1 }}
-        >
-          <Block safe flex middle>
-            <Block style={styles.registerContainer}>
-              <Block flex={0.25} middle style={styles.socialConnect}>
-                <Text color="#3355AA" size={18}>
-                  Login with
-                </Text>
-                <Block row>
-                  <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
-                    <Block row>
-                      <Icon
-                        name="logo-github"
-                        family="Ionicon"
-                        size={14}
-                        color={"black"}
-                        style={{ marginTop: 2, marginRight: 5 }}
-                      />
-                      <Text style={styles.socialTextButtons}>GITHUB</Text>
-                    </Block>
-                  </Button>
-                  <Button style={styles.socialButtons}>
-                    <Block row>
-                      <Icon
-                        name="logo-google"
-                        family="Ionicon"
-                        size={14}
-                        color={"black"}
-                        style={{ marginTop: 2, marginRight: 5 }}
-                      />
-                      <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                    </Block>
-                  </Button>
-                </Block>
+const Login = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const [email, setEmail] = useState("abc@gmail.com");
+  const [password, setPassword] = useState("12345678");
+
+  const handleLogin = () => {
+    dispatch(login({email, password}));
+  };
+
+  return (
+    <Block flex middle>
+      <StatusBar hidden />
+      <ImageBackground
+        source={Images.RegisterBackground}
+        style={{ width, height, zIndex: 1 }}
+      >
+        <Block safe flex middle>
+          <Block style={styles.registerContainer}>
+            <Block flex={0.25} middle style={styles.socialConnect}>
+              <Text color="#3355AA" size={18}>
+                Login with
+              </Text>
+              <Block row>
+                <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
+                  <Block row>
+                    <Icon
+                      name="logo-github"
+                      family="Ionicon"
+                      size={14}
+                      color={"black"}
+                      style={{ marginTop: 2, marginRight: 5 }}
+                    />
+                    <Text style={styles.socialTextButtons}>GITHUB</Text>
+                  </Block>
+                </Button>
+                <Button style={styles.socialButtons}>
+                  <Block row>
+                    <Icon
+                      name="logo-google"
+                      family="Ionicon"
+                      size={14}
+                      color={"black"}
+                      style={{ marginTop: 2, marginRight: 5 }}
+                    />
+                    <Text style={styles.socialTextButtons}>GOOGLE</Text>
+                  </Block>
+                </Button>
               </Block>
-              <Block flex>
-                <Block flex center>
-                  <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                    enabled
+            </Block>
+            <Block flex>
+              <Block flex center>
+                <KeyboardAvoidingView
+                  style={{ flex: 1 }}
+                  behavior="padding"
+                  enabled
+                >
+                  <Block
+                    width={width * 0.8}
+                    style={{ marginBottom: 15, marginTop: 20 }}
                   >
-                    <Block
-                      width={width * 0.8}
-                      style={{ marginBottom: 15, marginTop: 20 }}
+                    <Input
+                      value={email}
+                      onChangeText={setEmail}
+                      borderless
+                      placeholder="Email"
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="ic_mail_24px"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                  </Block>
+                  <Block width={width * 0.8}>
+                    <Input
+                      value={password}
+                      onChangeText={setPassword}
+                      password
+                      borderless
+                      placeholder="Password"
+                      iconContent={
+                        <Icon
+                          size={16}
+                          color={argonTheme.COLORS.ICON}
+                          name="padlock-unlocked"
+                          family="ArgonExtra"
+                          style={styles.inputIcons}
+                        />
+                      }
+                    />
+                    <Block row style={styles.passwordCheck}>
+                      <Text size={12} color={argonTheme.COLORS.MUTED}>
+                        password strength:
+                      </Text>
+                      <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
+                        {" "}
+                        strong
+                      </Text>
+                    </Block>
+                  </Block>
+                  <Block middle>
+                    <Button
+                      color="primary"
+                      style={styles.createButton}
+                      onPress={handleLogin}
                     >
-                      <Input
-                        borderless
-                        placeholder="Email"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="ic_mail_24px"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                    </Block>
-                    <Block width={width * 0.8}>
-                      <Input
-                        password
-                        borderless
-                        placeholder="Password"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
-                      <Block row style={styles.passwordCheck}>
-                        <Text size={12} color={argonTheme.COLORS.MUTED}>
-                          password strength:
-                        </Text>
-                        <Text bold size={12} color={argonTheme.COLORS.SUCCESS}>
-                          {" "}
-                          strong
-                        </Text>
-                      </Block>
-                    </Block>
-                    <Block middle>
-                      <Button color="primary" style={styles.createButton}>
-                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          Login
-                        </Text>
-                      </Button>
-                    </Block>
-                  </KeyboardAvoidingView>
-                </Block>
+                      <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                        Login
+                      </Text>
+                    </Button>
+                  </Block>
+                </KeyboardAvoidingView>
               </Block>
             </Block>
           </Block>
-        </ImageBackground>
-      </Block>
-    );
-  }
-}
+        </Block>
+      </ImageBackground>
+    </Block>
+  );
+};
 
 const styles = StyleSheet.create({
   registerContainer: {

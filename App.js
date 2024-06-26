@@ -5,7 +5,8 @@ import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import { Block, GalioProvider } from "galio-framework";
 import { NavigationContainer } from "@react-navigation/native";
-
+import { Provider as ReduxProvider } from "react-redux";
+import store from "./store";
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";
 enableScreens();
@@ -73,12 +74,14 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
-      <GalioProvider theme={argonTheme}>
-        <Block flex>
-          <Screens />
-        </Block>
-      </GalioProvider>
-    </NavigationContainer>
+    <ReduxProvider store={store}>
+      <NavigationContainer onReady={onLayoutRootView}>
+        <GalioProvider theme={argonTheme}>
+          <Block flex>
+            <Screens />
+          </Block>
+        </GalioProvider>
+      </NavigationContainer>
+    </ReduxProvider>
   );
 }
