@@ -3,7 +3,9 @@ import { Image, ScrollView, StyleSheet } from "react-native";
 
 import { DrawerItem as DrawerCustomItem } from "../components";
 import Images from "../constants/Images";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategories } from "../store/slices/articleSlice";
 
 function CustomDrawerContent({
   drawerPosition,
@@ -13,7 +15,16 @@ function CustomDrawerContent({
   state,
   ...rest
 }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, []);
+  const categories = useSelector((state) => state.article.categories);
   const screens = ["Home", "Profile", "Articles"];
+  categories.map((item, index) => {
+    screens.push(item.name);
+  });
+  console.log(screens)
   return (
     <Block
       style={styles.container}
@@ -50,6 +61,7 @@ function CustomDrawerContent({
             </Text>
           </Block>
           <DrawerCustomItem title="Getting Started" navigation={navigation} />
+          <DrawerCustomItem title="Log out" navigation={navigation} />
         </ScrollView>
       </Block>
     </Block>

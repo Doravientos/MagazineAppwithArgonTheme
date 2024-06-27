@@ -1,12 +1,37 @@
 {
   "expo": {
+    "name": "Magazine App",
+    "slug": "magazine-react-native",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.7.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "description": "Argon React Native, based on Argon Design System. Coded by Creative Tim",
     "extra": {
       "eas": {
-        "projectId": "2da5fb1a-b959-47f3-a65f-bfd5bb088d83"
+        "projectId": "5962d004-3279-46f7-a909-f66877786033"
       }
     },
     "android": {
-      "package": "com.tyne.magazineapp"
+      "package": "com.joshrod.magazinereactnative"
     }
   }
 }

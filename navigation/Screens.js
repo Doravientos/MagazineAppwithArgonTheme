@@ -13,6 +13,7 @@ import Elements from "../screens/Elements";
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
 import Pro from "../screens/Pro";
+import Details from "../screens/Details";
 import Profile from "../screens/Profile";
 import React from "react";
 import Register from "../screens/Register";
@@ -46,8 +47,8 @@ function ArticlesStack(props) {
         }}
       />
       <Stack.Screen
-        name="Pro"
-        component={Pro}
+        name="Details"
+        component={Details}
         options={{
           header: ({ navigation, scene }) => (
             <Header
