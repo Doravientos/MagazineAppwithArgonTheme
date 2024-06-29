@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { Header, Icon } from "../components";
 import { argonTheme, tabs } from "../constants";
 
-import Articles from "../screens/Articles";
+import Articles from "../components/Article";
 import { Block } from "galio-framework";
 // drawer
 import CustomDrawerContent from "./Menu";
-import Elements from "../screens/Elements";
 // screens
 import Home from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
@@ -118,42 +117,11 @@ function HomeStack(props) {
     <Stack.Navigator
       screenOptions={{
         mode: "card",
-        headerShown: "screen",
+        headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Home"
-              search
-              options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" },
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true,
-        }}
-      />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Pro" component={Pro} />
     </Stack.Navigator>
   );
 }
@@ -203,13 +171,6 @@ function AppStack(props) {
           <Drawer.Screen
             name="Profile"
             component={ProfileStack}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="Articles"
-            component={ArticlesStack}
             options={{
               headerShown: false,
             }}

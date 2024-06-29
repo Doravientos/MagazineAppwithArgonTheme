@@ -13,7 +13,7 @@ export default [
   {
     title: 'Coffee is more than just a drink: It’s …',
     image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
-    cta: 'View article' 
+    cta: 'View article' ,
   },
   {
     title: 'Fashion is a popular style, especially in …',

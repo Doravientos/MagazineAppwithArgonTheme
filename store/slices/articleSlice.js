@@ -16,12 +16,30 @@ export const getAllCategories = createAsyncThunk(
   }
 );
 
+export const getPostsByCategory = createAsyncThunk(
+  "article/getPostsByCategory",
+  async () => {
+    try {
+      const response = await axiosInstance({
+        url: "/user/pagenationPosts",
+        method: "GET",
+        params: {
+          page: 1,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const articleSlice = createSlice({
   name: "article",
   initialState: {
     status: "idle",
     error: null,
     categories: [],
+    posts: [],
   },
   reducers: {
     resetError: (state) => {
@@ -40,7 +58,18 @@ const articleSlice = createSlice({
       .addCase(getAllCategories.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      });
+      })
+      .addCase(getPostsByCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getPostsByCategory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.posts = action.payload;
+      })
+      .addCase(getPostsByCategory.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
   },
 });
 

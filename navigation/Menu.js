@@ -19,12 +19,20 @@ function CustomDrawerContent({
   useEffect(() => {
     dispatch(getAllCategories());
   }, []);
-  const categories = useSelector((state) => state.article.categories);
-  const screens = ["Home", "Profile", "Articles"];
+  const article = useSelector((state) => state.article);
+  const categories = article.categories;
+
+  const auth = useSelector((state) => state.auth);
+
+  const screens = ["Home"];
   categories.map((item, index) => {
     screens.push(item.name);
   });
-  console.log(screens)
+
+  const handleLogOut = () => {
+    dispatch(signout());
+  };
+
   return (
     <Block
       style={styles.container}
@@ -56,12 +64,9 @@ function CustomDrawerContent({
                 borderWidth: StyleSheet.hairlineWidth,
               }}
             />
-            <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>
-              DOCUMENTATION
-            </Text>
           </Block>
-          <DrawerCustomItem title="Getting Started" navigation={navigation} />
-          <DrawerCustomItem title="Log out" navigation={navigation} />
+          <DrawerCustomItem title="Profile" navigation={navigation} />
+          <DrawerCustomItem title="Logout" navigation={navigation} onPress={handleLogOut} />
         </ScrollView>
       </Block>
     </Block>

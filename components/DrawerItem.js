@@ -28,15 +28,6 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.ERROR}
           />
         );
-      case "Articles":
-        return (
-          <Icon
-            name="spaceship"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-          />
-        );
       case "Profile":
         return (
           <Icon
@@ -55,17 +46,25 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.INFO}
           />
         );
-      case "Getting Started":
-        return (<Icon
-          name="spaceship"
-          family="ArgonExtra"
-          size={14}
-          color={focused ? "white" : "rgba(0,0,0,0.5)"}
-        />);
-      case "Log out":
-        return <Icon />;
+      case "Logout":
+        return (
+          <Icon
+            name="engine-start"
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.INFO}
+          />
+        );
+
       default:
-        return null;
+        return (
+          <Icon
+            name="spaceship"
+            family="ArgonExtra"
+            size={14}
+            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
+          />
+        );
     }
   };
 
@@ -74,18 +73,16 @@ class DrawerItem extends React.Component {
 
     const containerStyles = [
       styles.defaultStyle,
-      focused ? [styles.activeStyle, styles.shadow] : null
+      focused ? [styles.activeStyle, styles.shadow] : null,
     ];
 
     return (
       <TouchableOpacity
         style={{ height: 60 }}
         onPress={() =>
-          title == "Getting Started"
-            ? Linking.openURL(
-                "https://demos.creative-tim.com/argon-pro-react-native/docs/"
-              ).catch(err => console.error("An error occurred", err))
-            : navigation.navigate(title)
+          title == "Profile"
+            ? navigation.navigate("Profile")
+            : navigation.navigate("Home")
         }
       >
         <Block flex row style={containerStyles}>
@@ -110,21 +107,21 @@ class DrawerItem extends React.Component {
 const styles = StyleSheet.create({
   defaultStyle: {
     paddingVertical: 16,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   activeStyle: {
     backgroundColor: argonTheme.COLORS.ACTIVE,
-    borderRadius: 4
+    borderRadius: 4,
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowRadius: 8,
-    shadowOpacity: 0.1
-  }
+    shadowOpacity: 0.1,
+  },
 });
 
 export default DrawerItem;

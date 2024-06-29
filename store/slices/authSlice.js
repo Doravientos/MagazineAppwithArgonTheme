@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axiosInstance from "../../constants/config";
 
-export const login = createAsyncThunk("auth/login", async (data) => {
+export const signin = createAsyncThunk("auth/signin", async (data) => {
   try {
     const response = await axiosInstance({
       url: "/signin",
@@ -27,6 +27,16 @@ export const signup = createAsyncThunk("auth/signup", async (data) => {
   } catch (error) {}
 });
 
+export const signout = createAsyncThunk("auth/signout", async (data) => {
+  try {
+    const response = await axiosInstance({
+      url: "/signout",
+      method: "POST",
+    });
+    return response.data;
+  } catch (error) {}
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -43,16 +53,16 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(signin.pending, (state) => {
         state.status = "loading";
         state.isLogged = false;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(signin.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload;
         state.isLogged = true;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(signin.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
         state.isLogged = false;
@@ -66,6 +76,18 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(signup.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(signout.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signout.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = null;
+        state.error = null;
+      })
+      .addCase(signout.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

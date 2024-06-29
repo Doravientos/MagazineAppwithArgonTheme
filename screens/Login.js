@@ -11,7 +11,7 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../store/slices/authSlice";
+import { signin } from "../store/slices/authSlice";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -24,7 +24,7 @@ const Login = (props) => {
   const auth = useSelector((state) => state.auth);
 
   const handleLogin = () => {
-    dispatch(login({ email, password }));
+    dispatch(signin({ email, password }));
   };
 
   return (
@@ -111,7 +111,7 @@ const Login = (props) => {
                         />
                       }
                     />
-                    <Block row style={styles.passwordCheck}>
+                    {/* <Block row style={styles.passwordCheck}>
                       <Text size={12} color={argonTheme.COLORS.MUTED}>
                         password strength:
                       </Text>
@@ -119,7 +119,7 @@ const Login = (props) => {
                         {" "}
                         strong
                       </Text>
-                    </Block>
+                    </Block> */}
                   </Block>
                   <Block middle>
                     <Button
