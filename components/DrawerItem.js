@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, Linking } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
 
-class DrawerItem extends React.Component {
-  renderIcon = () => {
-    const { title, focused } = this.props;
+const DrawerItem = (props) => {
+  const renderIcon = (head) => {
+    const { title, focused } = props;
 
     switch (title) {
       case "Home":
@@ -59,50 +59,102 @@ class DrawerItem extends React.Component {
       default:
         return (
           <Icon
-            name="spaceship"
+            name={head ? "spaceship" : "map-big"}
             family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
+            size={head ? 16 : 13}
+            color={head ? argonTheme.COLORS.WARNING : argonTheme.COLORS.PRIMARY}
           />
         );
     }
   };
 
-  render() {
-    const { focused, title, navigation } = this.props;
+  const { focused, title, navigation, child } = props;
+  const [expand, setExpand] = useState(false);
 
-    const containerStyles = [
-      styles.defaultStyle,
-      focused ? [styles.activeStyle, styles.shadow] : null,
-    ];
+  const containerStyles = [
+    styles.defaultStyle,
+    focused ? [styles.activeStyle, styles.shadow] : null,
+  ];
 
-    return (
-      <TouchableOpacity
-        style={{ height: 60 }}
-        onPress={() =>
-          title == "Profile"
-            ? navigation.navigate("Profile")
-            : navigation.navigate("Home")
-        }
-      >
-        <Block flex row style={containerStyles}>
-          <Block middle flex={0.1} style={{ marginRight: 5 }}>
-            {this.renderIcon()}
+  return (
+    <>
+      {child ? (
+        <>
+          <TouchableOpacity
+            style={{ height: 60 }}
+            onPress={() => setExpand(!expand)}
+          >
+            <Block flex row style={containerStyles}>
+              <Block middle flex={0.1} style={{ marginRight: 5 }}>
+                {renderIcon(true)}
+              </Block>
+              <Block row center flex={0.9}>
+                <Text
+                  size={15}
+                  bold={focused ? true : false}
+                  color={focused ? "white" : "rgba(0,0,0,0.5)"}
+                >
+                  {title}
+                </Text>
+              </Block>
+            </Block>
+          </TouchableOpacity>
+          {expand &&
+            child.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={{ height: 60 }}
+                  onPress={() =>
+                    navigation.navigate("Home", { title: "Article" })
+                  }
+                >
+                  <Block flex row style={containerStyles}>
+                    <Block middle flex={0.1} style={{ marginRight: 5 }}>
+                      {renderIcon()}
+                    </Block>
+                    <Block row center flex={0.9}>
+                      <Text
+                        size={15}
+                        bold={focused ? true : false}
+                        color={focused ? "white" : "rgba(0,0,0,0.5)"}
+                      >
+                        {item.title}
+                      </Text>
+                    </Block>
+                  </Block>
+                </TouchableOpacity>
+              );
+            })}
+        </>
+      ) : (
+        <TouchableOpacity
+          style={{ height: 60 }}
+          onPress={() =>
+            title == "Profile"
+              ? navigation.navigate("Profile")
+              : navigation.navigate("Home")
+          }
+        >
+          <Block flex row style={containerStyles}>
+            <Block middle flex={0.1} style={{ marginRight: 5 }}>
+              {renderIcon()}
+            </Block>
+            <Block row center flex={0.9}>
+              <Text
+                size={15}
+                bold={focused ? true : false}
+                color={focused ? "white" : "rgba(0,0,0,0.5)"}
+              >
+                {title}
+              </Text>
+            </Block>
           </Block>
-          <Block row center flex={0.9}>
-            <Text
-              size={15}
-              bold={focused ? true : false}
-              color={focused ? "white" : "rgba(0,0,0,0.5)"}
-            >
-              {title}
-            </Text>
-          </Block>
-        </Block>
-      </TouchableOpacity>
-    );
-  }
-}
+        </TouchableOpacity>
+      )}
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   defaultStyle: {

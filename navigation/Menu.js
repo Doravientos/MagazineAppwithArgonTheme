@@ -24,9 +24,15 @@ function CustomDrawerContent({
 
   const auth = useSelector((state) => state.auth);
 
-  const screens = ["Home"];
-  categories.map((item, index) => {
-    screens.push(item.name);
+  const screens = [{ title: "Home", child: null }];
+  categories.map((item) => {
+    if (item?.child !== undefined) {
+      const child = [];
+      item.child.map((ch) => {
+        child.push({ title: ch.name });
+      });
+      screens.push({ title: item.name, child: child });
+    } else screens.push({ title: item.name, child: null });
   });
 
   const handleLogOut = () => {
@@ -46,9 +52,10 @@ function CustomDrawerContent({
           {screens.map((item, index) => {
             return (
               <DrawerCustomItem
-                title={item}
+                title={item.title}
                 key={index}
                 navigation={navigation}
+                child={item.child}
                 focused={state.index === index ? true : false}
               />
             );
@@ -66,7 +73,11 @@ function CustomDrawerContent({
             />
           </Block>
           <DrawerCustomItem title="Profile" navigation={navigation} />
-          <DrawerCustomItem title="Logout" navigation={navigation} onPress={handleLogOut} />
+          <DrawerCustomItem
+            title="Logout"
+            navigation={navigation}
+            onPress={handleLogOut}
+          />
         </ScrollView>
       </Block>
     </Block>

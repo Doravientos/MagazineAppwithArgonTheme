@@ -120,7 +120,7 @@ function HomeStack(props) {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={Home} initialParams={{title: "Home"}}/>
       <Stack.Screen name="Pro" component={Pro} />
     </Stack.Navigator>
   );
