@@ -3,7 +3,6 @@ import Article from "../components/Article";
 class Home extends React.Component {
   render() {
     const { navigation, scene } = this.props;
-    console.log(this.props.route.params.title)
     return <Article title={this.props.route.params.title} navigation={navigation} scene={scene} />;
   }
 }

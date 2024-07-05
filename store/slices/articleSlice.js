@@ -18,10 +18,10 @@ export const getAllCategories = createAsyncThunk(
 
 export const getPostsByCategory = createAsyncThunk(
   "article/getPostsByCategory",
-  async () => {
+  async (url) => {
     try {
       const response = await axiosInstance({
-        url: "/user/pagenationPosts",
+        url: `/user/pagenationPosts/${url}`,
         method: "GET",
         params: {
           page: 1,

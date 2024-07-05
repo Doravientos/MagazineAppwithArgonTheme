@@ -6,7 +6,7 @@ import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
 
 const DrawerItem = (props) => {
-  const renderIcon = (head) => {
+  const renderIcon = (head, expand) => {
     const { title, focused } = props;
 
     switch (title) {
@@ -59,10 +59,16 @@ const DrawerItem = (props) => {
       default:
         return (
           <Icon
-            name={head ? "spaceship" : "map-big"}
+            name={head ? "spaceship" : "diamond"}
             family="ArgonExtra"
             size={head ? 16 : 13}
-            color={head ? argonTheme.COLORS.WARNING : argonTheme.COLORS.PRIMARY}
+            color={
+              head
+                ? expand
+                  ? argonTheme.COLORS.WARNING
+                  : argonTheme.COLORS.INFO
+                : argonTheme.COLORS.PRIMARY
+            }
           />
         );
     }
@@ -86,7 +92,7 @@ const DrawerItem = (props) => {
           >
             <Block flex row style={containerStyles}>
               <Block middle flex={0.1} style={{ marginRight: 5 }}>
-                {renderIcon(true)}
+                {renderIcon(true, expand)}
               </Block>
               <Block row center flex={0.9}>
                 <Text
@@ -104,7 +110,7 @@ const DrawerItem = (props) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  style={{ height: 60 }}
+                  style={{ height: 65 }}
                   onPress={() =>
                     navigation.navigate("Home", { title: "Article" })
                   }
