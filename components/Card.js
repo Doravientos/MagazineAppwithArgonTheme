@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
     minHeight: 114,
+    width: 330,
     marginBottom: 16
   },
   cardTitle: {

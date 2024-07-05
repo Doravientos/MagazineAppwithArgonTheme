@@ -157,9 +157,9 @@ class Header extends React.Component {
     if (search || tabs || options) {
       return (
         <Block center>
-          {search ? this.renderSearch() : null}
+          {/* {search ? this.renderSearch() : null} */}
           {/* {options ? this.renderOptions() : null} */}
-          {/* {tabs ? this.renderTabs() : null} */}
+          {tabs ? this.renderTabs() : null}
         </Block>
       );
     }

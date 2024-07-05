@@ -82,8 +82,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0
   },
   logo: {
-    width: 200,
-    height: 60,
+    width: 180,
     zIndex: 2,
     position: 'relative',
     marginTop: '-50%'

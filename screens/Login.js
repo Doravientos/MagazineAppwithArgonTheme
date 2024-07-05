@@ -38,34 +38,8 @@ const Login = (props) => {
           <Block style={styles.registerContainer}>
             <Block flex={0.25} middle style={styles.socialConnect}>
               <Text color="#3355AA" size={18}>
-                Login with
+                Login
               </Text>
-              <Block row>
-                <Button style={{ ...styles.socialButtons, marginRight: 30 }}>
-                  <Block row>
-                    <Icon
-                      name="logo-github"
-                      family="Ionicon"
-                      size={14}
-                      color={"black"}
-                      style={{ marginTop: 2, marginRight: 5 }}
-                    />
-                    <Text style={styles.socialTextButtons}>GITHUB</Text>
-                  </Block>
-                </Button>
-                <Button style={styles.socialButtons}>
-                  <Block row>
-                    <Icon
-                      name="logo-google"
-                      family="Ionicon"
-                      size={14}
-                      color={"black"}
-                      style={{ marginTop: 2, marginRight: 5 }}
-                    />
-                    <Text style={styles.socialTextButtons}>GOOGLE</Text>
-                  </Block>
-                </Button>
-              </Block>
             </Block>
             <Block flex>
               <Block flex center>
